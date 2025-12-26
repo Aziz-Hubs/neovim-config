@@ -1,0 +1,10 @@
+-- Automatically change directory and update LSP when switching tabs
+vim.api.nvim_create_autocmd("TabEnter", {
+  callback = function()
+    local dir = vim.fn.getcwd(-1, vim.api.nvim_get_current_tabpage())
+    vim.api.nvim_set_current_dir(dir)
+    -- This triggers Neoconf to reload the settings for the new directory
+    require("neoconf").setup()
+    print("📂 Switched to: " .. vim.fn.fnamemodify(dir, ":t"))
+  end,
+})
